@@ -1,8 +1,8 @@
 {
   "name": "GitHubProfileApp",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "ChargerIIC",
+  "homepage": "https://github.com/ChargerIIC",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
