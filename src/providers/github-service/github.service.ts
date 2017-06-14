@@ -31,7 +31,7 @@ export class GithubService {
 
   mockGetRepositoryInformation(username: string) : Observable<Repository[]> {
 
-    return Observable.for(REPOSITORY_LIST.filter(r => r.owner.name == username));
+    return Observable.of(REPOSITORY_LIST.filter(r => r.owner.name == username));
 
   }
 
