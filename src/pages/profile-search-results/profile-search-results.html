@@ -12,7 +12,12 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding *ngIf="this.user; else errorDiv">
  <search-results [user]="user"></search-results>
  <repositories *ngFor="let repo of repos" [repository]="repo"></repositories>
 </ion-content>
+<ng-template #errorDiv>
+  <ion-content padding>    
+      <h2><ion-icon name="alert" color="danger"></ion-icon><i>  Error: Unable to locate user - {{this.username}}</i></h2>
+  </ion-content>
+</ng-template>
