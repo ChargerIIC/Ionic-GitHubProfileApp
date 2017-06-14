@@ -23,7 +23,7 @@ import { REPOSITORY_LIST } from '../../mocks/repository.mocks';
 @Injectable()
 export class GithubService {
 
-  private baseUrl: string = 'http://api.github.com/users'
+  private baseUrl: string = 'https://api.github.com/users'
   private repoUrl: string = 'repos';
 
   constructor(private http: Http) {
