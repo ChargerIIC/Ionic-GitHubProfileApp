@@ -24,6 +24,7 @@ import { REPOSITORY_LIST } from '../../mocks/repository.mocks';
 export class GithubService {
 
   private baseUrl: string = 'http://api.github.com/users'
+  private repoUrl: string = 'repos';
 
   constructor(private http: Http) {
     console.log('Constructing GithubServiceProvider Provider');
@@ -31,21 +32,35 @@ export class GithubService {
 
   getUserInformation(username: string): Observable<User>{
     return this.http.get(`${this.baseUrl}/${username}`)//Note this is using a ` character instead of a single quote
-    .do((d: Response) => console.log(d))
-    .map((r: Response) => r.json())
-    .do((d: Response) => console.log(d))
-    .catch((e: Response) => Observable.throw(e.json().error || "Unkown Server-side Error"));
+    .map(this.extractData)
+    .catch(this.handleError);
+  }
+
+  getRepositoryInformation(username: string) : Observable<Repository[]> {
+    return this.http.get(`${this.baseUrl}/${username}/${this.repoUrl}`)
+    .map(this.extractData)
+    .catch(this.handleError);
   }
 
   mockGetUserInformation(username: string): Observable<User> {
     return Observable.of(USER_LIST.filter(u => u.name === username)[0]); //finding the username from within User_List equal to the passed in username
   }
 
-
   mockGetRepositoryInformation(username: string) : Observable<Repository[]> {
-
     return Observable.of(REPOSITORY_LIST.filter(r => r.owner.name == username));
+  }
 
+private handleError(error: Response | any){
+  return Observable.throw(error.json().error || "Unkown Server-side Error");
+}
+
+//While I'm normally all for removing redundant code, the following methods are one-liners with a poor code smell
+  private extractData(response: Response): any{
+    return response.json();
+  }
+
+  private logData(response: Response){
+    console.log(response);
   }
 
 }
