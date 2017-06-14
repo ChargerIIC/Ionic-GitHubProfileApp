@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 
-import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 
 import { User } from '../../models/user.interface';
 import { Repository } from '../../models/repository.interface';
@@ -20,8 +23,18 @@ import { REPOSITORY_LIST } from '../../mocks/repository.mocks';
 @Injectable()
 export class GithubService {
 
-  constructor() {
+  private baseUrl: string = 'http://api.github.com/users'
+
+  constructor(private http: Http) {
     console.log('Constructing GithubServiceProvider Provider');
+  }
+
+  getUserInformation(username: string): Observable<User>{
+    return this.http.get(`${this.baseUrl}/${username}`)
+    .do((d: Response) => console.log(d))
+    .map((r: Response) => r.json())
+    .do((d: Response) => console.log(d))
+    .catch((e: Response) => Observable.throw(e.json().error || "Unkown Server-side Error"));
   }
 
   mockGetUserInformation(username: string): Observable<User> {
