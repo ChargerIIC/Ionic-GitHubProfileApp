@@ -30,7 +30,7 @@ export class GithubService {
   }
 
   getUserInformation(username: string): Observable<User>{
-    return this.http.get(`${this.baseUrl}/${username}`)
+    return this.http.get(`${this.baseUrl}/${username}`)//Note this is using a ` character instead of a single quote
     .do((d: Response) => console.log(d))
     .map((r: Response) => r.json())
     .do((d: Response) => console.log(d))
