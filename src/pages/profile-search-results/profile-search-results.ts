@@ -10,7 +10,9 @@ import { Repository } from '../../models/repository.interface';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+@IonicPage({
+  segment: 'profile/results/:username'
+})
 @Component({
   selector: 'page-profile-search-results',
   templateUrl: 'profile-search-results.html',
