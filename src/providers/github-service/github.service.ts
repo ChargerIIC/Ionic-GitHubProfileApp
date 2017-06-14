@@ -6,7 +6,10 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { User } from '../../models/user.interface';
+import { Repository } from '../../models/repository.interface';
+
 import { USER_LIST } from '../../mocks/user.mocks';
+import { REPOSITORY_LIST } from '../../mocks/repository.mocks';
 
 /*
   Generated class for the GithubServiceProvider provider.
@@ -23,6 +26,13 @@ export class GithubService {
 
   mockGetUserInformation(username: string): Observable<User> {
     return Observable.of(USER_LIST.filter(u => u.name === username)[0]); //finding the username from within User_List equal to the passed in username
+  }
+
+
+  mockGetRepositoryInformation(username: string) : Observable<Repository[]> {
+
+    return Observable.for(REPOSITORY_LIST.filter(r => r.owner.name == username));
+
   }
 
 }

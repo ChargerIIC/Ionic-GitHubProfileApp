@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { GithubService} from '../../providers/github-service/github.service';
 import { User } from '../../models/user.interface';
+import { Repository } from '../../models/repository.interface';
 /**
  * Generated class for the ProfileSearchResultsPage page.
  *
@@ -16,8 +17,9 @@ import { User } from '../../models/user.interface';
 })
 export class ProfileSearchResultsPage {
 
-  username: string;
   user: User;
+  username: string;
+  repos: Repository[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private githubSvc: GithubService) {
   }
@@ -26,11 +28,12 @@ export class ProfileSearchResultsPage {
     this.username = this.navParams.get('username');
     if(this.username)
     {
-      this.getUserInformation();
+      this.getUserInformation(); //TODO: Why not get the user and pass it to the search results?
     }
   }
 
   getUserInformation(): void {
     this.githubSvc.mockGetUserInformation(this.username).subscribe(d => (this.user = d));
+    this.githubSvc.mockGetRepositoryInformation(this.username).subscribe((data:Repository[]) => this.repos=data);
   }
 }
