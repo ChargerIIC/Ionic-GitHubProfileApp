@@ -36,6 +36,12 @@ export class GithubService {
     .catch(this.handleError);
   }
 
+  getUserFollowingCount(username: string): Observable<User[]>{
+    return this.http.get(`${this.baseUrl}/${username}/followers`)
+    .map(this.extractData)
+    .catch(this.handleError);
+  }
+
   getRepositoryInformation(username: string) : Observable<Repository[]> {
     return this.http.get(`${this.baseUrl}/${username}/${this.repoUrl}`)
     .map(this.extractData)
@@ -48,6 +54,10 @@ export class GithubService {
 
   mockGetRepositoryInformation(username: string) : Observable<Repository[]> {
     return Observable.of(REPOSITORY_LIST.filter(r => r.owner.name == username));
+  }
+
+  mockGetUserFollowingCount(username: string): Observable<number>{
+    return Observable.of(0);
   }
 
 private handleError(error: Response | any){

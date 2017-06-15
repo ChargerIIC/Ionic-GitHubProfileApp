@@ -22,6 +22,8 @@ export class ProfileSearchResultsPage {
   user: User;
   username: string;
   repos: Repository[];
+  followers: User[];
+  followerCount : number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private githubSvc: GithubService) {
   }
@@ -39,5 +41,7 @@ export class ProfileSearchResultsPage {
     this.githubSvc.getUserInformation(this.username).subscribe(d => (this.user = d));
     //this.githubSvc.mockGetRepositoryInformation(this.username).subscribe((data:Repository[]) => this.repos=data);
     this.githubSvc.getRepositoryInformation(this.username).subscribe((data:Repository[]) => this.repos=data);
+    //this.githubSvc.mockGetUserFollowingCount(this.username).subscribe(c => this.followCount = c);
+    this.githubSvc.getUserFollowingCount(this.username).subscribe(c => {this.followers = c; this.followerCount = c.length});
   }
 }

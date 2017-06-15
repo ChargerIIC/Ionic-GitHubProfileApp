@@ -12,14 +12,10 @@ import { IonicModule } from 'ionic-angular'
   templateUrl: 'search-results.component.html'
 })
 export class SearchResultsComponent {
-
-  text: string;
-
   @Input() user: User;
+  @Input() followers: number;
 
   constructor() {
-    console.log('Hello SearchResultsComponent Component');
-    this.text = 'Hello World';
   }
 
 }

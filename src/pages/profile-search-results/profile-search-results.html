@@ -13,7 +13,7 @@
 
 
 <ion-content padding *ngIf="this.user; else errorDiv">
- <search-results [user]="user"></search-results>
+ <search-results [user]="user" [followers]="followerCount"></search-results>
  <repositories *ngFor="let repo of repos" [repository]="repo"></repositories>
 </ion-content>
 <ng-template #errorDiv>
