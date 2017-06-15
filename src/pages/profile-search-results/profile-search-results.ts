@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { GithubService} from '../../providers/github-service/github.service';
 import { User } from '../../models/user.interface';
@@ -25,7 +26,8 @@ export class ProfileSearchResultsPage {
   followers: User[];
   followerCount : number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private githubSvc: GithubService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private githubSvc: GithubService, private appBrowser: InAppBrowser) {
+  
   }
 
   ionViewWillLoad() {
@@ -43,5 +45,9 @@ export class ProfileSearchResultsPage {
     this.githubSvc.getRepositoryInformation(this.username).subscribe((data:Repository[]) => this.repos=data);
     //this.githubSvc.mockGetUserFollowingCount(this.username).subscribe(c => this.followCount = c);
     this.githubSvc.getUserFollowingCount(this.username).subscribe(c => {this.followers = c; this.followerCount = c.length});
+  }
+
+  launchBrowser(repo: string){
+    this.appBrowser.create(`https://github.com/${this.username}/${repo}`);
   }
 }
